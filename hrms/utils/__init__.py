@@ -18,8 +18,8 @@ def get_country(fields=None):
 		res = requests.get(
 			"https://pro.ip-api.com/json/{ip}?key={key}&fields={fields}".format(
 				ip=ip, key=frappe.conf.get("ip-api-key"), fields=",".join(fields)
-			)
-		)
+			), 
+		timeout=60)
 
 		try:
 			country_info[ip] = res.json()
