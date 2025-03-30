@@ -2,7 +2,6 @@
 # License: GNU General Public License v3. See license.txt
 
 import calendar
-import random
 
 import frappe
 from frappe.model.document import Document
@@ -46,6 +45,7 @@ from hrms.payroll.doctype.salary_slip.salary_slip import (
 from hrms.payroll.doctype.salary_slip.salary_slip_loan_utils import if_lending_app_installed
 from hrms.payroll.doctype.salary_structure.salary_structure import make_salary_slip
 from hrms.tests.test_utils import get_email_by_subject, get_first_sunday
+import secrets
 
 
 class TestSalarySlip(FrappeTestCase):
@@ -1893,7 +1893,7 @@ def create_exemption_declaration(employee, payroll_period):
 
 
 def create_proof_submission(employee, payroll_period, amount):
-	submission_date = add_months(payroll_period.start_date, random.randint(0, 11))
+	submission_date = add_months(payroll_period.start_date, secrets.SystemRandom().randint(0, 11))
 	proof_submission = frappe.get_doc(
 		{
 			"doctype": "Employee Tax Exemption Proof Submission",
@@ -1917,7 +1917,7 @@ def create_proof_submission(employee, payroll_period, amount):
 
 
 def create_benefit_claim(employee, payroll_period, amount, component):
-	claim_date = add_months(payroll_period.start_date, random.randint(0, 11))
+	claim_date = add_months(payroll_period.start_date, secrets.SystemRandom().randint(0, 11))
 	frappe.get_doc(
 		{
 			"doctype": "Employee Benefit Claim",
@@ -2004,7 +2004,7 @@ def create_salary_slips_for_payroll_period(
 		if i == 11:
 			slip.deduct_tax_for_unsubmitted_tax_exemption_proof = 1
 			slip.deduct_tax_for_unclaimed_employee_benefits = 1
-		if deduct_random and not random.randint(0, 2):
+		if deduct_random and not secrets.SystemRandom().randint(0, 2):
 			slip.deduct_tax_for_unsubmitted_tax_exemption_proof = 1
 			deducted_dates.append(posting_date)
 		slip.posting_date = posting_date
@@ -2017,7 +2017,7 @@ def create_salary_slips_for_payroll_period(
 
 
 def create_additional_salary(employee, payroll_period, amount):
-	salary_date = add_months(payroll_period.start_date, random.randint(0, 11))
+	salary_date = add_months(payroll_period.start_date, secrets.SystemRandom().randint(0, 11))
 	frappe.get_doc(
 		{
 			"doctype": "Additional Salary",
