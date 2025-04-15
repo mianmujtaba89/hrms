@@ -1,9 +1,8 @@
 from collections.abc import Generator
 
-import requests
-
 import frappe
 from frappe.utils import add_days, date_diff
+from security import safe_requests
 
 country_info = {}
 
@@ -15,7 +14,7 @@ def get_country(fields=None):
 
 	if ip not in country_info:
 		fields = ["countryCode", "country", "regionName", "city"]
-		res = requests.get(
+		res = safe_requests.get(
 			"https://pro.ip-api.com/json/{ip}?key={key}&fields={fields}".format(
 				ip=ip, key=frappe.conf.get("ip-api-key"), fields=",".join(fields)
 			)

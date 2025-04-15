@@ -1,6 +1,6 @@
 import sys
-import requests
 from urllib.parse import urlparse
+from security import safe_requests
 
 
 def uri_validator(x):
@@ -22,7 +22,7 @@ def docs_link_exists(body):
 
 if __name__ == "__main__":
 	pr = sys.argv[1]
-	response = requests.get("https://api.github.com/repos/frappe/hrms/pulls/{}".format(pr))
+	response = safe_requests.get("https://api.github.com/repos/frappe/hrms/pulls/{}".format(pr))
 
 	if response.ok:
 		payload = response.json()
