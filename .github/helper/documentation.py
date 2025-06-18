@@ -22,7 +22,7 @@ def docs_link_exists(body):
 
 if __name__ == "__main__":
 	pr = sys.argv[1]
-	response = requests.get("https://api.github.com/repos/frappe/hrms/pulls/{}".format(pr))
+	response = requests.get("https://api.github.com/repos/frappe/hrms/pulls/{}".format(pr), timeout=60)
 
 	if response.ok:
 		payload = response.json()
