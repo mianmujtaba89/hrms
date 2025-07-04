@@ -10,6 +10,7 @@ from hrms.hr.doctype.interview.test_interview import (
 	create_skill_set,
 )
 from hrms.tests.test_utils import create_job_applicant
+import secrets
 
 
 class TestInterviewFeedback(FrappeTestCase):
@@ -89,11 +90,10 @@ def create_interview_feedback(interview, interviewer, skills_ratings):
 
 
 def get_skills_rating(interview_round):
-	import random
 
 	skills = frappe.get_all(
 		"Expected Skill Set", filters={"parent": interview_round}, fields=["skill"]
 	)
 	for d in skills:
-		d["rating"] = random.random()
+		d["rating"] = secrets.SystemRandom().random()
 	return skills
